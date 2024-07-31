@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
 
 class CustomTextfield extends StatelessWidget {
-  const CustomTextfield({super.key});
+  final TextEditingController controller;
+  final bool obscure;
+  final String text;
+  const CustomTextfield(
+      {super.key,
+      required this.text,
+      required this.controller,
+      required this.obscure});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.tertiary,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: TextField(
+        obscureText: obscure,
+        controller: controller,
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.tertiary,
+              ),
             ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primary,
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
-          ),
-          filled: true,
-          fillColor: Colors.white,
-          hintText: 'Email'),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: text),
+      ),
     );
   }
 }
