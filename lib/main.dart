@@ -7,12 +7,11 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensures Flutter engine is initialized before using Firebase
+  await Firebase.initializeApp(); // Initialize Firebase
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
