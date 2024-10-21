@@ -1,4 +1,6 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:chat_app/widgets/custom_button.dart';
+import 'package:chat_app/widgets/home.dart';
 import 'package:chat_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +9,33 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key, required this.onTap});
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  void login(BuildContext context) async {
+    final AuthService service = AuthService();
+    try {
+      await service.signInWithEmailPassword(
+        emailController.text,
+        passwordController.text,
+      );
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                backgroundColor: Colors.white,
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('Ok'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                content: Text(e.toString()),
+              ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +66,9 @@ class LoginPage extends StatelessWidget {
               ),
               CustomButton(
                 text: 'Login',
-                ontap: () {},
+                ontap: () {
+                  login(context);
+                },
               ),
               const SizedBox(
                 height: 25,

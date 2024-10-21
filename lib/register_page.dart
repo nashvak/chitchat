@@ -1,4 +1,6 @@
+import 'package:chat_app/auth/auth_service.dart';
 import 'package:chat_app/widgets/custom_button.dart';
+import 'package:chat_app/widgets/home.dart';
 import 'package:chat_app/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,6 +11,32 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
+  void register(BuildContext context) async {
+    final AuthService service = AuthService();
+    try {
+      await service.signInWithEmailPassword(
+        emailController.text,
+        passwordController.text,
+      );
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                backgroundColor: Colors.white,
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text('Ok'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                content: Text(e.toString()),
+              ));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +76,10 @@ class RegisterPage extends StatelessWidget {
               ),
               CustomButton(
                 text: 'Register',
-                ontap: () {},
+                ontap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                },
               ),
               const SizedBox(
                 height: 25,
