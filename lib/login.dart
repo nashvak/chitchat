@@ -12,12 +12,10 @@ class LoginPage extends StatelessWidget {
   void login(BuildContext context) async {
     final AuthService service = AuthService();
     try {
-      await service.signInWithEmailPassword(
+      await service.loginWithEmailPassword(
         emailController.text,
         passwordController.text,
       );
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
     } catch (e) {
       showDialog(
           context: context,

@@ -14,7 +14,13 @@ class CustomTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Null value";
+          }
+          return null;
+        },
         obscureText: obscure,
         controller: controller,
         decoration: InputDecoration(
